@@ -10,13 +10,23 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// Adds files to myapp
-    Add(AddArgs),
+    /// Generate a random color
+    Random,
+    /// Generate a gradient color
+    Gradient(GradientOptions),
 }
 
-#[derive(Args)]
-struct AddArgs {
-    name: Option<String>,
+#[derive(Args, Debug)]
+struct GradientOptions {
+    /// color
+    #[arg(short = 'c', long = "color")]
+    color: Vec<String>,
+    /// number of steps
+    #[arg(short = 'n', long = "num_steps", default_value_t = 10)]
+    num_step: usize,
+    /// stops
+    #[arg(short = 's', long = "stops")]
+    stops: Vec<f32>,
 }
 
 fn main() {
@@ -25,8 +35,11 @@ fn main() {
     // You can check for the existence of subcommands, and if found use their
     // matches just as you would the top level cmd
     match &cli.command {
-        Commands::Add(name) => {
-            println!("'myapp add' was used, name is: {:?}", name.name)
+        Commands::Gradient(grad_ops) => {
+            println!("gradient match : {:?}", grad_ops)
+        }
+        Commands::Random => {
+            println!("Random match")
         }
     }
 }
