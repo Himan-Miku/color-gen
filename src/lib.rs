@@ -35,7 +35,7 @@ pub enum ColorGenerationError {
         advice: String,
         #[label("colors")]
         color_src: (usize, usize),
-        #[label("Steps")]
-        steps_src: (usize, usize),
+        #[label("Stops")]
+        stops_src: (usize, usize),
     },
 }
