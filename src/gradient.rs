@@ -5,6 +5,8 @@ use owo_colors::OwoColorize;
 use palette::{rgb::Rgb, Gradient, LinSrgb};
 use rand::Rng;
 
+use crate::ColorGenerationError;
+
 #[derive(Args, Debug)]
 pub struct GradientOptions {
     /// color
@@ -24,10 +26,22 @@ pub fn generate(
         num_step,
         stops,
     }: &GradientOptions,
-) {
+) -> Result<(), ColorGenerationError> {
     if colors.len() > 0 {
         if colors.len() != stops.len() {
-            panic!("The number of colors and stops is not same:\nNumber of colors: {:?}\nNumber of stops: {:?}",colors, stops)
+            let colors_str = format!("{:?}", colors);
+            let stops_str = format!("{:?}", stops);
+
+            return Err(ColorGenerationError::ColorsAndStepsMustMatch {
+                input: format!("{}\n{}\n{}", &colors_str, num_step, stops_str),
+                advice: format!(
+                    "match number of colors: `{}` with number of stops: `{}`",
+                    colors.len(),
+                    stops.len()
+                ),
+                color_src: (0, colors_str.len()),
+                stops_src: (colors_str.len(), stops_str.len()),
+            });
         }
 
         let color_list = zip(stops, colors)
@@ -66,6 +80,8 @@ pub fn generate(
 
             print!("{}", debug_str.on_color(*color))
         }
+
+        Ok(())
     } else {
         let mut rng = rand::thread_rng();
 
@@ -110,5 +126,6 @@ pub fn generate(
 
             print!("{}", debug_str.on_color(*color))
         }
+        Ok(())
     }
 }
