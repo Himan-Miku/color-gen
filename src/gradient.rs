@@ -7,7 +7,7 @@ use rand::Rng;
 pub struct GradientOptions {
     /// color
     #[arg(short = 'c', long = "color")]
-    color: Vec<String>,
+    colors: Vec<String>,
     /// number of steps
     #[arg(short = 'n', long = "num_steps", default_value_t = 10)]
     num_step: usize,
@@ -18,14 +18,14 @@ pub struct GradientOptions {
 
 pub fn generate(
     GradientOptions {
-        color,
+        colors,
         num_step,
         stops,
     }: &GradientOptions,
 ) {
-    if color.len() > 0 {
-        if color.len() != stops.len() {
-            panic!("The number of colors and stops is not same:\nNumber of colors: {:?}\nNumber of stops: {:?}",color, stops)
+    if colors.len() > 0 {
+        if colors.len() != stops.len() {
+            panic!("The number of colors and stops is not same:\nNumber of colors: {:?}\nNumber of stops: {:?}",colors, stops)
         }
     } else {
         let mut rng = rand::thread_rng();
