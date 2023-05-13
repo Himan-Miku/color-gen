@@ -40,7 +40,7 @@ pub fn generate(
                     stops.len()
                 ),
                 color_src: (0, colors_str.len()),
-                stops_src: (colors_str.len(), stops_str.len()),
+                stops_src: (colors_str.len() + 4, stops_str.len()),
             });
         }
 
