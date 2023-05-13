@@ -1,5 +1,5 @@
 use clap::Parser;
-use color_gen::{Cli, Commands};
+use color_gen::{gradient, Cli, Commands};
 use owo_colors::OwoColorize;
 use rand::Rng;
 
@@ -8,7 +8,7 @@ fn main() {
 
     match &cli.command {
         Commands::Gradient(grad_ops) => {
-            println!("gradient match : {:?}", grad_ops)
+            gradient::generate(grad_ops);
         }
         Commands::Random => {
             let mut rng = rand::thread_rng();
