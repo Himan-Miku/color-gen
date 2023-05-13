@@ -24,6 +24,9 @@ pub fn generate(
     }: &GradientOptions,
 ) {
     if color.len() > 0 {
+        if color.len() != stops.len() {
+            panic!("The number of colors and stops is not same:\nNumber of colors: {:?}\nNumber of stops: {:?}",color, stops)
+        }
     } else {
         let mut rng = rand::thread_rng();
 
